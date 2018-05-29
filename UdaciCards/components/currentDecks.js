@@ -8,10 +8,6 @@ import { setLocalNotification,clearLocalNotification } from '../utils/helper'
 
 class currentDecks extends Component{
 
-	componentWillUnmount(){
-   		DeviceEventEmitter.emit('ChangeUI', {color:'red',text:'通知'});
-  	}
-
 	componentDidMount(){
 		getDecks().then((data)=>{
 			AsyncStorage.multiGet(data).then((results)=>{
