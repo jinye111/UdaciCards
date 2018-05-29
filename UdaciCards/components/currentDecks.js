@@ -3,21 +3,54 @@ import { View, Platform, StatusBar,Text,AsyncStorage,StyleSheet,TouchableOpacity
 import { connect } from 'react-redux'
 import { getDecks } from '../utils/api'
 import { showDecks } from '../actions'
+import { isObjectValueEqual } from '../utils/helper'
+import { setLocalNotification,clearLocalNotification } from '../utils/helper'
 
 class currentDecks extends Component{
 
 	componentDidMount(){
 		getDecks().then((data)=>{
-			AsyncStorage.multiGet(data).then((results)=>{this.props.dispatch(showDecks(results))})
+			AsyncStorage.multiGet(data).then((results)=>{
+				let decks = {}
+				for (var i = 0; i < data.length; i++) {
+	  				decks[results[i][0]]=JSON.parse(results[i][1])
+  				}
+  				console.log(decks)
+  				Object.keys(decks).forEach((title)=>{
+  					console.log(title)
+  					if (!decks[title].isComplete) {
+  						setLocalNotification()
+  					}
+  				})
+
+  				if (!isObjectValueEqual(decks,this.props.decks)) {
+  					this.props.showDecks(decks)
+  				}
+				
+			})
+		})
+
+	}
+
+	componentWillReceiveProps(){
+		console.log("123")
+		getDecks().then((data)=>{
+			AsyncStorage.multiGet(data).then((results)=>{
+				let decks = {}
+				for (var i = 0; i < data.length; i++) {
+	  				decks[results[i][0]]=JSON.parse(results[i][1])
+  				}
+  				console.log(results)
+  				if (!isObjectValueEqual(decks,this.props.decks)) {
+  					this.props.showDecks(decks)
+  				}
+			})
 		})
 	}
 
 
 	render(){
 		const decks = this.props.decks;
-		if (JSON.stringify(decks)!=='{}') {
-			console.log(Object.keys(this.props.decks))
-		}
 		
 		return(
 			<View style={{flex: 1,alignItems: 'center'}}>
@@ -47,19 +80,21 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps (state) {
-  let decks = {}
-  const data = state.decks
-  if (JSON.stringify(state)!=='{}') {
-  	for (var i = 0; i < data.length; i++) {
-	  	decks[data[i][0]]=JSON.parse(data[i][1])
-  	}	
+function mapDispatchToProps (dispatch) {
+	console.log("45678")
+  return {
+    showDecks: (data) => {dispatch(showDecks(data))},
   }
+}
+
+function mapStateToProps (state) {
   
-  return {decks}
+  return state
   
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(currentDecks)
+

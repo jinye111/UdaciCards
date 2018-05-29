@@ -9,7 +9,7 @@ class Exam extends Component{
 		index:0,
 		isOver:false,
 		number:0,
-		showAnswer:false
+		showAnswer:false,
 	}
 
 	showAnswer=()=>{
@@ -34,6 +34,9 @@ class Exam extends Component{
 			}))	
 		}
 		if (index===length-1) {
+			let questions=this.props.navigation.state.params.questions
+			questions['isComplete']=true
+			AsyncStorage.mergeItem(this.props.navigation.state.params.questions['title'],JSON.stringify(questions))
 			this.setState((prevState)=>({
 				isOver:true
 			}))	
@@ -42,7 +45,7 @@ class Exam extends Component{
 	
 	render(){
 		const {index}=this.state
-		const questions = this.props.navigation.state.params.questions
+		const questions = this.props.navigation.state.params.questions['questions']
 		return (
 			<View>
 				{!this.state.isOver&&<Text>{questions[index].question}</Text>}

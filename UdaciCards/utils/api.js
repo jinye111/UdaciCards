@@ -12,16 +12,17 @@ export function getDecks () {
 export function saveDeckTitle (id) {
 	let deck={
 		title:id,
-		questions:[]
+		questions:[],
+		isComplete:false
 	}
 	AsyncStorage.mergeItem(id,JSON.stringify(deck))
 }
 
 export function addCardToDeck({title,card}){
-	console.log(title)
 	AsyncStorage.getItem(title).then(json=>{
 		let content = JSON.parse(json);
 		content['questions'].push(card)
+		content.isComplete=false
 		AsyncStorage.mergeItem(title,JSON.stringify(content))
 	});
 }

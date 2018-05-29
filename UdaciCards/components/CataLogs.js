@@ -8,14 +8,13 @@ class CataLogs extends Component{
 
 	render(){
 		const questions=this.props.navigation.state.params.questions
-		console.log(questions)
 		return (
 			<View>
 				<Text>卡片集名称:{questions.title}</Text>
 				<TouchableHighlight underlayColor='#d4271b' onPress={()=>this.props.navigation.navigate('deckDetails',{title:questions.title})}>
 					<Text >Add card</Text>
 				</TouchableHighlight>
-				<TouchableHighlight onPress={()=>this.props.navigation.navigate('Exam',{questions:questions['questions']})}>
+				<TouchableHighlight onPress={()=>this.props.navigation.navigate('Exam',{questions:questions})}>
 					<Text>Start quize</Text>
 				</TouchableHighlight>
 			</View>

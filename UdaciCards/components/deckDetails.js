@@ -15,22 +15,15 @@ class deckDetails extends Component{
 		this.setState(()=>({
 			question:input
 		}))
-		console.log(this.state.question)
-		console.log(this.state.answer)
 	}
 
 	handleAnswerChange=(input)=>{
-		console.log("123")
-
 		this.setState(()=>({
 			answer:input
 		}))
 	}
 
 	handleQuestionInput=(title,question,answer)=>{
-		console.log(title)
-		console.log(question)
-		console.log(answer)
 		let card={
 			question:question,
 			answer:answer

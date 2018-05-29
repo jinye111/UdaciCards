@@ -2,10 +2,10 @@ import { SHOW_DECKS } from '../actions'
 import { combineReducers } from 'redux'
 
 function decks(state={},action) {
-	const {data}=action;
+	const {decks}=action;
   	switch(action.type){
     	case SHOW_DECKS :
-    	  	return data;
+    	  	return decks;
 
     	default :
       		return state

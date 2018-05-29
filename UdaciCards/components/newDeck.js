@@ -11,7 +11,6 @@ class newDeck extends Component{
 	}
 
 	handleTextChange=(input)=>{
-		console.log(input)
 		this.setState(()=>({
 			title:input
 		}))
