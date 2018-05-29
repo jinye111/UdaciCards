@@ -11,6 +11,7 @@ class CataLogs extends Component{
 		return (
 			<View>
 				<Text>卡片集名称:{questions.title}</Text>
+				<Text>题目数量:{questions.questions.length}</Text>
 				<TouchableHighlight underlayColor='#d4271b' onPress={()=>this.props.navigation.navigate('deckDetails',{title:questions.title})}>
 					<Text >Add card</Text>
 				</TouchableHighlight>

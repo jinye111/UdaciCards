@@ -59,7 +59,11 @@ class Exam extends Component{
 				{!this.state.isOver&&<TouchableOpacity onPress={this.showAnswer.bind(this,questions.length,index)}>
 					<Text>正确答案</Text>
 				</TouchableOpacity>}
+				{!this.state.isOver&&<Text>题目剩余数量:{questions.length-this.state.index-1}</Text>}
 				{this.state.isOver&&<Text>您的正确率为{this.state.number*100/questions.length+"%"}</Text>}
+				{this.state.isOver&&<TouchableOpacity onPress={()=>{this.props.navigation.navigate('currentDecks')}}>
+					<Text>返回</Text>
+				</TouchableOpacity>}
 			</View>
 		)
 	}

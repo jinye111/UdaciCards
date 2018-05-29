@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import { View, Platform, StatusBar,Text,TextInput,StyleSheet,TouchableHighlight } from 'react-native'
+import { View, Platform, StatusBar,Text,TextInput,StyleSheet,TouchableHighlight,DeviceEventEmitter } from 'react-native'
 import { addCardToDeck } from '../utils/api'
 import { connect } from 'react-redux'
 
@@ -23,6 +23,11 @@ class deckDetails extends Component{
 		}))
 	}
 
+	componentWillUnmount(){
+    	DeviceEventEmitter.emit('ChangeUI');
+  	}
+
+
 	handleQuestionInput=(title,question,answer)=>{
 		let card={
 			question:question,
@@ -32,6 +37,7 @@ class deckDetails extends Component{
 	}
 
 	handleCompletle=()=>{
+		DeviceEventEmitter
 		this.props.navigation.navigate('currentDecks')
 	}
 

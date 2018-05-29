@@ -26,6 +26,10 @@ class newDeck extends Component{
 
 	}
 
+	componentWillUnmount(){
+   		DeviceEventEmitter.emit('ChangeUI');
+  	}
+
 	render(){
 		const {title} = this.state
 		return(
