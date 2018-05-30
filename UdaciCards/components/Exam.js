@@ -21,7 +21,8 @@ class Exam extends Component{
 
 	restart=()=>{
 		this.setState({
-			isOver:true,
+			isOver:false,
+			number:0
 		})
 	}
 
