@@ -15,12 +15,6 @@ class currentDecks extends Component{
 				for (var i = 0; i < data.length; i++) {
 	  				decks[results[i][0]]=JSON.parse(results[i][1])
   				}
-  				Object.keys(decks).forEach((title)=>{
-  					console.log(title)
-  					if (!decks[title].isComplete) {
-  						setLocalNotification()
-  					}
-  				})
 
   				if (!isObjectValueEqual(decks,this.props.decks)) {
   					this.props.showDecks(decks)
@@ -29,7 +23,6 @@ class currentDecks extends Component{
 			})
 		})
 		DeviceEventEmitter.addListener('ChangeUI',(dic)=>{
-            //接收到详情页发送的通知，刷新首页的数据，改变按钮颜色和文字，刷新UI
             getDecks().then((data)=>{
 			AsyncStorage.multiGet(data).then((results)=>{
 				let decks = {}

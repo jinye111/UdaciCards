@@ -3,6 +3,7 @@ import { View, Platform, StatusBar,Text,AsyncStorage,StyleSheet,TouchableOpacity
 import { connect } from 'react-redux'
 import { getDecks } from '../utils/api'
 import { showDecks } from '../actions'
+import { setLocalNotification,clearLocalNotification } from '../utils/helper'
 
 class Exam extends Component{
 	state={
@@ -18,10 +19,16 @@ class Exam extends Component{
 		})
 	}
 
+	restart=()=>{
+		this.setState({
+			isOver:true,
+		})
+	}
+
 	judge=(answer1,answer2,length,index)=>{
 		console.log(answer1===answer2)
 		console.log(answer2)
-		if (answer1===answer2) {
+		if (answer1 === 'Correct') {
 			this.setState((prevState)=>({
 				number:prevState.number+1
 			}))
@@ -34,6 +41,7 @@ class Exam extends Component{
 			}))	
 		}
 		if (index===length-1) {
+			clearLocalNotification().then(setLocalNotification);
 			let questions=this.props.navigation.state.params.questions
 			questions['isComplete']=true
 			AsyncStorage.mergeItem(this.props.navigation.state.params.questions['title'],JSON.stringify(questions))
@@ -61,8 +69,11 @@ class Exam extends Component{
 				</TouchableOpacity>}
 				{!this.state.isOver&&<Text>题目剩余数量:{questions.length-this.state.index-1}</Text>}
 				{this.state.isOver&&<Text>您的正确率为{this.state.number*100/questions.length+"%"}</Text>}
+				{this.state.isOver&&<TouchableOpacity onPress={this.restart}>
+					<Text>Restart</Text>
+				</TouchableOpacity>}
 				{this.state.isOver&&<TouchableOpacity onPress={()=>{this.props.navigation.navigate('currentDecks')}}>
-					<Text>返回</Text>
+					<Text>return</Text>
 				</TouchableOpacity>}
 			</View>
 		)
